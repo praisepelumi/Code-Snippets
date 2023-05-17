@@ -1,0 +1,94 @@
+@use 'sass:math';
+@import url('https://use.typekit.net/spt4xch.css');
+
+.welcomeDiv {
+  background-image: linear-gradient(black, rgb(0, 110, 255));
+  height: 1080px;
+  width: 100%px;
+  overflow: hidden;
+  cursor: none;
+}
+
+.backgroundImg {
+  background-image: url('https://image.ibb.co/czVo18/stars.png');
+  width: 100%;
+  height: 1080px;
+  opacity: 0.8;
+  overflow: hidden;
+  background-size: 2400px;
+}
+
+@for $i from 0 through 3517 {
+  #grid:nth-child(#{$i}) {
+    position: absolute;
+    top: math.floor(math.div($i, 79) * 24px);
+    left: $i * 24px - (math.floor(math.div($i, 79)) * 1896) - 24px;
+    z-index: 1;
+    color: rgba(255, 0, 0, 0);
+    transition: 2s;
+    font-size: 48px;
+  }
+
+  #grid:nth-child(#{math.floor(math.div($i,4))*4}):hover {
+    transition: none;
+    color: rgb(255, 153, 0);
+    font-size: 24px;
+    z-index: 1;
+  }
+  #grid:nth-child(#{math.floor(math.div($i,4))*4 + 1}):hover {
+    transition: none;
+    color: rgb(255, 251, 0);
+    font-size: 28px;
+    z-index: 1;
+  }
+  #grid:nth-child(#{math.floor(math.div($i,4))*4 + 2}):hover {
+    transition: none;
+    color: rgb(255, 102, 0);
+    font-size: 20px;
+    z-index: 1;
+  }
+  #grid:nth-child(#{math.floor(math.div($i,4))*4 + 3}):hover {
+    transition: none;
+    color: rgb(255, 60, 0);
+    font-size: 26px;
+    z-index: 1;
+  }
+}
+
+#welcomePageMain {
+  font-family: raleway, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  color: white;
+  text-align: center;
+  margin-top: 18%;
+  max-width: 100%;
+
+  h1 {
+    font-size: 5rem;
+    margin: 1rem;
+    position: relative;
+    z-index: 99;
+  }
+
+  button {
+    margin: 0.6rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.6rem;
+    border: 1px solid white;
+    transition: 0.3s;
+    position: relative;
+    z-index: 99;
+  }
+
+  button:hover {
+    background: none;
+    color: white;
+  }
+
+  h3 {
+    margin: 2rem;
+    position: relative;
+    z-index: 99;
+  }
+}

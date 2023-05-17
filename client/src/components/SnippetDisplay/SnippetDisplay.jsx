@@ -60,6 +60,7 @@ const SnippetDisplay = ({ selectedSnippet, getSnippet }) => {
     };
     // within fetch request (post)
     // body: JSON.stringify(created object)
+
     fetch('/snippets', {
       method: 'PUT',
       headers: { 'Content-type': 'Application/json' },
