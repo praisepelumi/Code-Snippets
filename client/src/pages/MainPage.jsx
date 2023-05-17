@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import MainContainer from '../containers/MainContainer/MainContainer';
+import {useSelector} from 'react-redux';
+import WelcomePage from './WelcomePage';
 
 export default function MainPage() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  return isLoggedIn ? <MainContainer /> : <WelcomePage />;
+  const username = useSelector(state => state.appSlice.username)
+  return username ? <MainContainer /> : <WelcomePage />;
 }

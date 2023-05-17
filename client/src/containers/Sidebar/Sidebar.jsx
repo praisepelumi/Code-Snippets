@@ -19,10 +19,10 @@ const Sidebar = () => {
   // getSnippet func
   const getSnippet = () => {
     setLoading(true);
-    fetch('http://localhost:3000/snippets')
+    fetch('/snippets')
       .then((res) => res.json())
       .then((res) => {
-        console.log('res', res);
+        // console.log('res', res);
 
         // moved setSnippets to outside of for loop so we arent re-rendering each time a snippet is added to state
         const newSnippetArray = [];
