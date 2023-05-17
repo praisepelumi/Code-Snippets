@@ -14,6 +14,8 @@ const Sidebar = () => {
   const [collapse, setCollapse] = useState(false);
   const [loading, setLoading] = useState(true);
 
+
+
   // getSnippet func
   const getSnippet = () => {
     setLoading(true);
@@ -55,63 +57,94 @@ const Sidebar = () => {
     setCollapse(() => !collapse);
   };
 
-  return (
-    <>
-      <Card className={`pt-0 ${styles.sidebar} ${!collapse && styles.open}`}>
-        <Card.Header>
-          <h1>Code Snippets</h1>
-          <button className={styles.toggleButton} onClick={toggleSidebar}>
-            <img
-              className={`${styles.arrow} ${!collapse && styles.arrowOpen}`}
-              src={arrow}
-              alt='arrow'
-            />
-          </button>
-        </Card.Header>
-        <Card.Body className='px-0 pt-0'>
-          <div className={styles.cardBody}>
-            {/* render our snippet list, pass down snippets and function to update selectedSnippet */}
-            {loading && (
-              <div className='d-flex justify-content-center pt-3'>
-                <Spinner
-                  animation='border'
-                  role='status'
-                  variant='primary'
-                ></Spinner>
-              </div>
-            )}
-            <SnippetsRadioList
-              snippets={snippets}
-              onChange={setSelectedSnippetWrapper}
-            />
-          </div>
-        </Card.Body>
-        
-        <h2 className={styles.imgHeader} style={{ display:'inline-block'}}>Click me to add a new snippet!</h2>
-        <button
-          className={styles.addButton}
-          onClick={() => {
-            setOpenModal(true);
-          }}
-        >
-          <img src={img} alt="img" className={styles.img}/>
-        </button>
+ 
+  // const [testState, setTestState] = useState([]);
 
-      </Card>
-      {openModal && <AddSnippet closeModal={setOpenModal} />}
-      <div
-        className={`${styles.snippetDisplay} ${
-          !collapse && styles.snippetDisplayOpen
-        }`}
-      >
-        {snippets && (
-          <SnippetDisplay
-            selectedSnippet={selectedSnippet}
-            getSnippet={getSnippet}
-          />
-        )}
-      </div>
-    </>
+  // return (
+  //   <div>
+  //     <button onClick={() => setTestState([...testState, <h1>hello</h1>])}>CLICK ME</button>
+  //     {testState}
+  //   </div>
+  //   )
+
+  // return (
+  //   <div>
+  //     <button onClick={() => setTestState([...testState, 'hello'])}>CLICK ME</button>
+  //     {testState.map((el) => {
+  //       return <h1>{el}</h1>;
+  //     })}
+  //   </div>
+  //   )
+
+  // let x = []
+  // for(let i=0; i<testState.length; i++) {
+  //   x.push(<h1>{testState[i]}</h1>)
+  // }
+
+  // return (
+  //   <div>
+  //     <button onClick={() => setTestState([...testState, 'hello'])}>CLICK ME</button>
+  //     {x}
+  //   </div>
+  //   )
+
+  return (
+      <>
+        <Card className={`pt-0 ${styles.sidebar} ${!collapse && styles.open}`}>
+          <Card.Header>
+            <h1>Code Snippets</h1>
+            <button className={styles.toggleButton} onClick={toggleSidebar}>
+              <img
+                className={`${styles.arrow} ${!collapse && styles.arrowOpen}`}
+                src={arrow}
+                alt='arrow'
+              />
+            </button>
+          </Card.Header>
+          <Card.Body className='px-0 pt-0'>
+            <div className={styles.cardBody}>
+              {/* render our snippet list, pass down snippets and function to update selectedSnippet */}
+              {loading && (
+                <div className='d-flex justify-content-center pt-3'>
+                  <Spinner
+                    animation='border'
+                    role='status'
+                    variant='primary'
+                  ></Spinner>
+                </div>
+              )}
+              <SnippetsRadioList
+                snippets={snippets}
+                setSelectedSnippetWrapper={setSelectedSnippetWrapper}
+              />
+            </div>
+          </Card.Body>
+
+          <h2 className={styles.imgHeader} style={{ display:'inline-block'}}>Click me to add a new snippet!</h2>
+          <button
+            className={styles.addButton}
+            onClick={() => {
+              setOpenModal(true);
+            }}
+          >
+            <img src={img} alt="img" className={styles.img}/>
+          </button>
+
+        </Card>
+        {openModal && <AddSnippet closeModal={setOpenModal} setSnippets={setSnippets} />}
+        <div
+          className={`${styles.snippetDisplay} ${
+            !collapse && styles.snippetDisplayOpen
+          }`}
+        >
+          {snippets && (
+            <SnippetDisplay
+              selectedSnippet={selectedSnippet}
+              getSnippet={getSnippet}
+            />
+          )}
+        </div>
+      </>
   );
 };
 

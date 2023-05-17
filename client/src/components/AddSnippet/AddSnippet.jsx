@@ -10,7 +10,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { LANGUAGES } from '../../data/data.js';
 
-const AddSnippet = ({ closeModal }) => {
+const AddSnippet = ({ closeModal, setSnippets }) => {
   const [title, setTitle] = useState('');
   const [language, setLanguage] = useState('');
   const [comments, setComments] = useState('');
@@ -48,7 +48,10 @@ const AddSnippet = ({ closeModal }) => {
         console.log('failed saving snippet');
       });
 
-
+    setSnippets((prevState) => [
+      ...prevState,
+      { title: title, language: language, comments: comments, tags: tagList, storedCode: storedCode },
+    ]);
     // setTitle('');
     // setLanguage('');
     // setComments('');
@@ -61,40 +64,34 @@ const AddSnippet = ({ closeModal }) => {
   }
 
   return (
-    <div className="modalBackground">
-      <div className="modalContainer modal show">
+    <div className='modalBackground'>
+      <div className='modalContainer modal show'>
         <Modal
           className={styles.modal}
           show={true}
           onHide={() => closeModal(false)}
-          size="xl"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-        >
+          size='xl'
+          aria-labelledby='contained-modal-title-vcenter'
+          centered>
           <Modal.Header className={styles.header}>
-            <Modal.Title className="col-12 text-center">Add a snippet</Modal.Title>
+            <Modal.Title className='col-12 text-center'>Add a snippet</Modal.Title>
           </Modal.Header>
           <br />
 
           <div className={styles.codeSnippet}>
-
             <label>Title: </label>
             <input
               className={styles.title}
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value);
-              }}
-            ></input>
+              }}></input>
             {error && <span className='error'>Title is required!</span>}
             <br />
             <br />
 
             <label>Language: </label>
-            <select className={styles.language}
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-            >
+            <select className={styles.language} value={language} onChange={(e) => setLanguage(e.target.value)}>
               {LANGUAGES.map((language) => (
                 <option key={language} value={language}>
                   {language}
@@ -110,8 +107,7 @@ const AddSnippet = ({ closeModal }) => {
               value={comments}
               onChange={(e) => {
                 setComments(e.target.value);
-              }}
-            ></input>
+              }}></input>
             <br />
             <br />
 
@@ -119,19 +115,15 @@ const AddSnippet = ({ closeModal }) => {
             <TagInput className={styles.tags} onChange={setTagsWrapper} />
             <hr />
 
-            <h5 className="px-2">Enter code:</h5>
+            <h5 className='px-2'>Enter code:</h5>
             <CodeMirror
               className={styles.editor}
-              height="500px"
-              id="storedCode"
+              height='500px'
+              id='storedCode'
               // value={storedCode}
               extensions={[langs.tsx()]}
-              placeholder={
-                "const sayHi = () => {\n  console.log('Hello World!)\n}"
-              }
-              onChange={(e) => setStoredCode(e)}
-            >
-            </CodeMirror>
+              placeholder={"const sayHi = () => {\n  console.log('Hello World!)\n}"}
+              onChange={(e) => setStoredCode(e)}></CodeMirror>
             {/* <input
               id='storedCode'
               value={storedCode}
@@ -142,19 +134,14 @@ const AddSnippet = ({ closeModal }) => {
           </div>
 
           <Modal.Footer>
-          {openModal && <SaveModal closeModal={setOpenModal} />}
-            <Button variant="secondary" onClick={() => closeModal(false)}>
+            {openModal && <SaveModal closeModal={setOpenModal} />}
+            <Button variant='secondary' onClick={() => closeModal(false)}>
               Close
             </Button>
-            <Button
-              variant="primary"
-              className="saveButton"
-              onClick={handleSubmit}
-            >
+            <Button variant='primary' className='saveButton' onClick={handleSubmit}>
               Save
             </Button>
           </Modal.Footer>
-          
         </Modal>
       </div>
     </div>
