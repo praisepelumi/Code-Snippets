@@ -6,8 +6,7 @@ const cors = require('cors');
 
 const port = process.env.PORT || 3000;
 
-const mongoURI =
-  'mongodb+srv://kevinlifan:JpDlY94rtxnSRI3V@cluster0.wz3t5tp.mongodb.net/?retryWrites=true&w=majority';
+const mongoURI = 'mongodb+srv://kevinlifan:JpDlY94rtxnSRI3V@cluster0.wz3t5tp.mongodb.net/?retryWrites=true&w=majority';
 
 mongoose.connect(mongoURI);
 
@@ -32,9 +31,9 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-// app.listen(port, () => {
-//   console.log(`Server listening on port ${port}...`);
-// });
 
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}...`);
+});
 
-module.exports = app.listen(port, () => console.log(`Listening on port ${port}`));
+// module.exports = app.listen(port, () => console.log(`Listening on port ${port}`));

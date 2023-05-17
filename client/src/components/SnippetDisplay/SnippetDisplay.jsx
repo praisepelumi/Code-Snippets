@@ -54,8 +54,11 @@ const SnippetDisplay = ({ selectedSnippet, getSnippet }) => {
     };
     // within fetch request (post)
     // body: JSON.stringify(created object)
-    fetch (`/snippets?id=${id}`, {
+    fetch ("/snippets", {
       method: 'PUT',
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(updatedSnippet)
     })
       .then((response) => {
