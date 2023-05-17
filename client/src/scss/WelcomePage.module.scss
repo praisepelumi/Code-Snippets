@@ -18,7 +18,7 @@
   background-size: 2400px;
 }
 
-@for $i from 0 through 3517 {
+@for $i from 0 through 3400 {
   #grid:nth-child(#{$i}) {
     position: absolute;
     top: math.floor(math.div($i, 79) * 24px);
