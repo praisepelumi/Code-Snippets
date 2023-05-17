@@ -19,6 +19,7 @@ const Sidebar = () => {
   // getSnippet func
   const getSnippet = () => {
     setLoading(true);
+
     fetch('/snippets')
       .then((res) => res.json())
       .then((res) => {
