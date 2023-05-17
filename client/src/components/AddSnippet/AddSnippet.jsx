@@ -50,7 +50,7 @@ const AddSnippet = ({ closeModal, setSnippets }) => {
 
     setSnippets((prevState) => [
       ...prevState,
-      { title: title, language: language, comments: comments, tags: tagList, storedCode: storedCode },
+      { title, language, comments, tags, storedCode },
     ]);
     // setTitle('');
     // setLanguage('');
