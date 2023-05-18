@@ -6,7 +6,7 @@ import styles from './SnippetDisplay.module.scss';
 import { langs } from '@uiw/codemirror-extensions-langs';
 import TagInput from '../../components/ui/TagInput/TagInput';
 import { Card, Button } from 'react-bootstrap';
-const SnippetDisplay = ({ selectedSnippet, getSnippet }) => {
+const SnippetDisplay = ({ selectedSnippet }) => {
   // indSnippet = this.props
   // create delete method using fetch request
   let snippetTitle = selectedSnippet.title ? selectedSnippet.title : '';
@@ -35,7 +35,8 @@ const SnippetDisplay = ({ selectedSnippet, getSnippet }) => {
     })
       .then((response) => {
         if (response.ok) {
-          getSnippet();
+          // getSnippet();
+          // delete from state
         }
       })
       .catch((err) => {
@@ -68,7 +69,8 @@ const SnippetDisplay = ({ selectedSnippet, getSnippet }) => {
     })
       .then((response) => {
         response.json();
-        getSnippet();
+        // getSnippet();
+        // update the state
       })
       .catch((err) => {
         return {

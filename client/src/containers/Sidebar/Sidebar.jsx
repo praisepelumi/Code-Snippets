@@ -6,35 +6,18 @@ import SnippetsRadioList from './SnippetsRadioList/SnippetsRadioList.jsx';
 import { Card, Spinner } from 'react-bootstrap';
 import arrow from '../../assets/arrow.png';
 import img from '../../assets/star nose mole.jpeg';
+import {useDispatch, useSelector} from 'react-redux';
+import { setLoading, setSnippets } from '../../../store/appSlice.js';
 
 const Sidebar = () => {
-  const [snippets, setSnippets] = useState([]);
   const [selectedSnippet, setSelectedSnippet] = useState({});
   const [openModal, setOpenModal] = useState(false);
   const [collapse, setCollapse] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const loading = useSelector(state => state.appSlice.loading);
+  const snippets = useSelector(state => state.appSlice.snippets);
 
-
-
-  // getSnippet func
-  const getSnippet = () => {
-    setLoading(true);
-
-    fetch('/snippets')
-      .then((res) => res.json())
-      .then((res) => {
-        // console.log('res', res);
-
-        // moved setSnippets to outside of for loop so we arent re-rendering each time a snippet is added to state
-        const newSnippetArray = [];
-        for (const snippet of res.snippets) newSnippetArray.push(snippet);
-
-        setSnippets(newSnippetArray);
-        setLoading(false);
-      })
-      .catch((error) => console.log('Get request failed', error));
-  };
-
+ 
   // renderTags function
   const renderTabs = () => {
     const tabs = [];
@@ -52,7 +35,7 @@ const Sidebar = () => {
   };
 
   // get data from backend at first page load
-  useEffect(() => getSnippet(), []);
+  // useEffect(() => getSnippet(), []);
 
   const toggleSidebar = () => {
     setCollapse(() => !collapse);
@@ -125,6 +108,7 @@ const Sidebar = () => {
           <button
             className={styles.addButton}
             onClick={() => {
+              console.log("hello");
               setOpenModal(true);
             }}
           >
@@ -132,7 +116,7 @@ const Sidebar = () => {
           </button>
 
         </Card>
-        {openModal && <AddSnippet closeModal={setOpenModal} setSnippets={setSnippets} />}
+        {openModal && <AddSnippet closeModal={setOpenModal} />}
         <div
           className={`${styles.snippetDisplay} ${
             !collapse && styles.snippetDisplayOpen
@@ -141,7 +125,6 @@ const Sidebar = () => {
           {snippets && (
             <SnippetDisplay
               selectedSnippet={selectedSnippet}
-              getSnippet={getSnippet}
             />
           )}
         </div>
