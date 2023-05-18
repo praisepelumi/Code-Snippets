@@ -47,8 +47,10 @@ const AddSnippet = ({ closeModal }) => {
         storedCode: storedCode,
       }),
     })
-      .then(() => {
-        dispatch(setSnippets([{ username, title, language, comments, tagList, storedCode }]));
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        dispatch(setSnippets([{ _id: response._id, username, title, language, comments, tagList, storedCode }]));
       })
       .catch((err) => {
         console.log(err);
