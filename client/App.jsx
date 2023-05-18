@@ -14,6 +14,14 @@ const App = () => {
 
   document.querySelector('body').setAttribute('theme', themeColor);
 
+  // useEffect(() => {
+  //   fetch('/user/verifyCookie')
+  //     .then((res) => res.json())
+  //     .then((res) => {
+  //       if (res.status === 200) dispatch(setUsername(res.username));
+  //     });
+  // });
+
   return (
     <>
       <div className={styles.darkModeOn}>

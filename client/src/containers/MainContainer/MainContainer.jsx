@@ -2,14 +2,15 @@ import React from 'react';
 import Sidebar from '../Sidebar/Sidebar.jsx';
 import styles from './MainContainer.module.scss';
 import { useDispatch } from 'react-redux';
-import { setOpenModal, setUsername } from '../../../store/appSlice.js';
+import { setOpenModal, setSnippets, setUsername } from '../../../store/appSlice.js';
 import img from '../../assets/star nose mole.jpeg';
 
 const MainContainer = () => {
   const dispatch = useDispatch();
   function logoutFunction() {
-    dispatch(setUsername(null));
+    dispatch(setSnippets('delete'));
     document.cookie = 'ssid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    dispatch(setUsername(null));
   }
 
   return (

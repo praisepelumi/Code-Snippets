@@ -21,7 +21,8 @@ export const appSlice = createSlice({
     },
 
     setSnippets: (state, action) => {
-      if (!Array.isArray(action.payload)) {
+      if(action.payload === 'delete') state.snippets = []
+      else if (!Array.isArray(action.payload)) {
         for (let i = 0; i < state.snippets.length; i++)
           if (state.snippets[i]._id === action.payload) state.snippets.splice(i, 1);
       } else state.snippets = [...state.snippets, ...action.payload];
