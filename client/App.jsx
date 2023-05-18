@@ -6,12 +6,12 @@ import LoginPage from './src/pages/LoginPage.jsx';
 import MainContainer from './src/containers/MainContainer/MainContainer.jsx';
 
 const App = () => (
-    <Routes>
-      {/* <Route path='/' element={<MainPage />} /> */}
-            <Route path='/' element={<MainContainer />} />
-      <Route path='/signup' element={<SignupPage />} />
-      <Route path='/login' element={<LoginPage />} />
-    </Routes>
+  <Routes>
+    <Route path='/' element={<MainPage />} />
+    {/* <Route path='/' element={<MainContainer />} /> */}
+    <Route path='/signup' element={<SignupPage />} />
+    <Route path='/login' element={<LoginPage />} />
+  </Routes>
 );
 
 export default App;

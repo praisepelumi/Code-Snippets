@@ -13,7 +13,6 @@ export default function LoginPage() {
    const getSnippet = (username) => {
     dispatch(setLoading(true));
 
-    console.log(newSnippetArray)
     fetch(`/snippets/${username}`)
       .then((res) => res.json())
       .then((res) => {
