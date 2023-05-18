@@ -4,7 +4,7 @@ const snippetsController = require('../controllers/snippetsController');
 
 const router = express.Router();
 
-router.get('/', snippetsController.getSnippets, (req, res) =>
+router.get('/:username', snippetsController.getSnippets, (req, res) =>
   res.status(200).json(res.locals.allSnippets)
 );
 
@@ -12,7 +12,7 @@ router.post('/', snippetsController.createSnippet, (req, res) =>
   res.status(200).json(res.locals.createdSnippet)
 );
 
-router.put('/', snippetsController.updateSnippet, (req, res) =>
+router.post('/update', snippetsController.updateSnippet, (req, res) =>
   res.status(200).json(res.locals.updatedSnippet)
 );
 

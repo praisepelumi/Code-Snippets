@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  username: { type: String, required: true },
+  username: { type: String, required: true, unique: true},
   password: { type: String, required: true },
+  
   tags: {
     type: Object,
     default: {},
@@ -13,23 +14,18 @@ const userSchema = new Schema({
     default: {},
   },
 
-  lastId: { type: Number, default: 0 },
+});
 
-  snippets: {
-    type: [
-      {
-        id: { type: Number, required: true },
-        type: Object,
-        title: { type: String, required: true },
-        comments: { type: String },
-        storedCode: { type: String },
+const SALT_WORK_FACTOR = 10;
+const bcrypt = require('bcryptjs');
 
-        tags: [String],
-        language: { type: String },
-      },
-    ],
-    default: [],
-  },
+userSchema.pre('save', function (next) {
+  const hash =  bcrypt.hash(this.password, SALT_WORK_FACTOR, (err, hash) => {
+    if (err) return next(err);
+
+    this.password = hash;
+    return next();
+  });
 });
 
 module.exports = mongoose.model('User', userSchema);

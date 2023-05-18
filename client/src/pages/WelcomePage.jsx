@@ -24,12 +24,10 @@ export default function WelcomePage() {
     navigate('/login');
   }
 
-  document.body.style.cursor = 'none';
-
   const griddy = [];
-  for (let i = 0; i < 3400; i++) {
-    griddy.push(<i className='fa-solid fa-star' id={styles.grid}></i>);
-  }
+  // for (let i = 0; i < 3400; i++) {
+  //   griddy.push(<i className='fa-solid fa-star' id={styles.grid}></i>);
+  // }
 
   return (
     <div

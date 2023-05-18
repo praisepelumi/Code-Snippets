@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUsername } from '../../store/appSlice';
+import { setLoading } from '../../store/appSlice';
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -10,8 +11,7 @@ export default function SignupPage() {
 
   function signUpFunction(e, password) {
     e.preventDefault();
-    // TODO: change endpoint here based on what they use on the backend
-    fetch('/tbd', {
+    fetch('/user/createUser', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -21,7 +21,12 @@ export default function SignupPage() {
         password: password,
       }),
     })
-      .then((data) => data.json())
+      .then((data) => {
+        if(data.status === 200) {
+          dispatch(setLoading(false));
+          navigate('/')          
+        }
+      })
       // then if data.statusCode === 200 we navigate
       // else we create an error message
       .catch((err) => {
