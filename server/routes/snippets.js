@@ -12,7 +12,7 @@ router.post('/', snippetsController.createSnippet, (req, res) =>
   res.status(200).json(res.locals.createdSnippet)
 );
 
-router.put('/', snippetsController.updateSnippet, (req, res) =>
+router.post('/update', snippetsController.updateSnippet, (req, res) =>
   res.status(200).json(res.locals.updatedSnippet)
 );
 

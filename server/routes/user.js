@@ -5,7 +5,7 @@ const cookieController = require('../controllers/cookieController');
 
 const router =  express.Router();
 
-router.post('/createUser', userController.findUser, userController.createUser, (req, res) => {
+router.post('/createUser', userController.createUser, (req, res) => {
   return res.sendStatus(200);
 });
 

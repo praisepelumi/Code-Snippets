@@ -7,7 +7,7 @@ snippetsController.getSnippets = (req, res, next) => {
   console.log('req.params is:', req.params);
 
   Snippet.find({ username })
-  
+
     .then((user) => {
       res.locals.allSnippets = user;
       console.log('res.locals.allSnippets is:', res.locals.allSnippets);
@@ -28,59 +28,70 @@ snippetsController.createSnippet = async (req, res, next) => {
     const newSnippet = await Snippet.create(snippet);
     res.locals.createdSnippet = newSnippet;
     return next();
-  }
-  catch (err) {
+  } catch (err) {
     next(err);
   }
-  
-  // Snippet.findById(userId)
-  //   .then((user) => {
-  //     // Increment the lastId and assign it to the new snippet
-  //     const newSnippetId = user.lastId + 1;
-  //     user.lastId = newSnippetId;
-
-  //     // Create the new snippet object with the assigned ID
-  //     const newSnippet = {
-  //       id: newSnippetId,
-  //       ...snippet,
-  //     };
-
-  //     // Push the new snippet to the snippets array
-  //     user.snippets.push(newSnippet);
-
-  //     const [tags, languages] = recalcTagsAndLang(user);
-  //     user.tags = tags;
-  //     user.languages = languages;
-
-  //     // Save the updated user document
-  //     return user.save().then((updatedUser) => {
-  //       res.locals.createdSnippet = newSnippet;
-  //       next();
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     console.error('Creating a snippet has failed:', error);
-  //     next(error);
-  //   });
 };
 
 snippetsController.updateSnippet = async (req, res, next) => {
-  const { id, title, comments, storedCode, tags, language } = req.body;
+  // const { _id, title, comments, storedCode, tags, language } = req.body;
   console.log('req.body: ', req.body);
-  if (!title) return next('error');
-  const updatedSnippet = { id, title, comments, storedCode, tags, language };
-  const userId = '646502debb99b1a626e16436';
-  
-  try {
-    await Snippet.findOneAndUpdate(
-      { _id: id }, //filter by
-      updatedSnippet,  // update
-      {new: true}); // return new document
-    return next();
-  } catch(err) {
-    return next(err);
-  }
+
+  if (!req.body.title) return next('error');
+  res.locals.updatedSnippet = await Snippet.findOneAndUpdate(
+    { _id: req.body._id }, //filter by
+    req.body, // update. // could just be req.body
+    { new: true }
+  );
+  return next();
+
+  // return new document
+
+  // const updatedSnippet = { _id, title, comments, storedCode, tags, language };
+
+  // try {
+  //   const updatedSnippet = await Snippet.findOneAndUpdate(
+  //     { _id: req.body._id }, //filter by
+  //     req.body, // update. // could just be req.body
+  //     { new: true }
+  //   ); // return new document
+  //   res.locals.updatedSnippet = updatedSnippet;
+  //   // console.log('!!!!!!!!!!', res.locals.updatedSnippet);
+  //   return next();
+  // } catch (err) {
+  //   return next(err);
+  // }
 };
+
+// Snippet.findById(userId)
+//   .then((user) => {
+//     // Increment the lastId and assign it to the new snippet
+//     const newSnippetId = user.lastId + 1;
+//     user.lastId = newSnippetId;
+
+//     // Create the new snippet object with the assigned ID
+//     const newSnippet = {
+//       id: newSnippetId,
+//       ...snippet,
+//     };
+
+//     // Push the new snippet to the snippets array
+//     user.snippets.push(newSnippet);
+
+//     const [tags, languages] = recalcTagsAndLang(user);
+//     user.tags = tags;
+//     user.languages = languages;
+
+//     // Save the updated user document
+//     return user.save().then((updatedUser) => {
+//       res.locals.createdSnippet = newSnippet;
+//       next();
+//     });
+//   })
+//   .catch((error) => {
+//     console.error('Creating a snippet has failed:', error);
+//     next(error);
+//   });
 
 //   Snippet.findOneAndUpdate(
 //     { _id: id, 'snippets.id': updatedSnippet.id },
@@ -112,8 +123,7 @@ snippetsController.deleteSnippet = async (req, res, next) => {
   try {
     await Snippet.findByIdAndDelete(id);
     return next();
-  }
-  catch(err) {
+  } catch (err) {
     console.log('Deleting the the snippet has failed:', err);
     return next(err);
   }

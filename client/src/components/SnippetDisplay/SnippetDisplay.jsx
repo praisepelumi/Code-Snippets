@@ -6,19 +6,18 @@ import styles from './SnippetDisplay.module.scss';
 import { langs } from '@uiw/codemirror-extensions-langs';
 import TagInput from '../../components/ui/TagInput/TagInput';
 import { Card, Button } from 'react-bootstrap';
+import { json } from 'react-router-dom';
+import { setSnippets } from '../../../store/appSlice';
+import { useDispatch } from 'react-redux';
+import { updateSnippet } from '../../../store/appSlice';
+
 const SnippetDisplay = ({ selectedSnippet }) => {
   // indSnippet = this.props
   // create delete method using fetch request
   let snippetTitle = selectedSnippet.title ? selectedSnippet.title : '';
-  let snippetLanguage = selectedSnippet.language
-    ? selectedSnippet.language
-    : '';
-  let snippetComments = selectedSnippet.comments
-    ? selectedSnippet.comments
-    : '';
-  let snippetStoredCode = selectedSnippet.storedCode
-    ? selectedSnippet.storedCode
-    : '';
+  let snippetLanguage = selectedSnippet.language ? selectedSnippet.language : '';
+  let snippetComments = selectedSnippet.comments ? selectedSnippet.comments : '';
+  let snippetStoredCode = selectedSnippet.storedCode ? selectedSnippet.storedCode : '';
   let snippetTagList = selectedSnippet.tags ? selectedSnippet.tags : [];
 
   // create a state variable for each passed down state and the its setState function
@@ -28,14 +27,20 @@ const SnippetDisplay = ({ selectedSnippet }) => {
   // const [storedCode, setStoredCode] = useState(snippetStoredCode);
   // const [tagList, setTags] = useState(snippetTagList);
   const [editButtonState, setEditButtonState] = useState(false);
+  const dispatch = useDispatch();
 
   const deleteSnippet = (id) => {
-    fetch(`http://localhost:3000/snippets?id=${id}`, {
+    console.log(id);
+    fetch('/snippets', {
       method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
     })
       .then((response) => {
         if (response.ok) {
-          // getSnippet();
+          dispatch(setSnippets(id));
         }
       })
       .catch((err) => {
@@ -47,11 +52,12 @@ const SnippetDisplay = ({ selectedSnippet }) => {
       });
   };
 
-  const editSnippet = (id) => {
+  const editSnippet = (e, id) => {
+    e.preventDefault()
     // const [oldState, setOldState] = React.useState([]);
     // create an object (eventually will hold the updated state)
     const updatedSnippet = {
-      id: id,
+      _id: id,
       title: snippetTitle,
       comments: snippetComments,
       storedCode: snippetStoredCode,
@@ -61,14 +67,15 @@ const SnippetDisplay = ({ selectedSnippet }) => {
     // within fetch request (post)
     // body: JSON.stringify(created object)
 
-    fetch('/snippets', {
-      method: 'PUT',
-      headers: { 'Content-type': 'Application/json' },
+    fetch('/snippets/update', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
       body: JSON.stringify(updatedSnippet),
     })
       .then((response) => {
-        response.json();
-        // getSnippet();
+        dispatch(updateSnippet(updatedSnippet));
       })
       .catch((err) => {
         return {
@@ -85,66 +92,54 @@ const SnippetDisplay = ({ selectedSnippet }) => {
     if (editButtonState === true) {
       return (
         <div className={styles.entireSnippetDisplay}>
-          <div className="displayContainer">
-            <span className="title"> Title: </span>
+          <div className='displayContainer'>
+            <span className='title'> Title: </span>
             <input
               defaultValue={snippetTitle}
-              className="titleEdit"
+              className='titleEdit'
               onChange={(e) => {
                 snippetTitle = e.target.value;
-              }}
-            ></input>
+              }}></input>
 
-            <span className="language"> Language: </span>
+            <span className='language'> Language: </span>
             <input
               defaultValue={snippetLanguage}
-              className="languageEdit"
+              className='languageEdit'
               onChange={(e) => {
                 snippetLanguage = e.target.value;
-              }}
-            ></input>
+              }}></input>
 
-            <span className="comments"> Comments: </span>
+            <span className='comments'> Comments: </span>
             <input
               defaultValue={snippetComments}
-              className="commentsEdit"
+              className='commentsEdit'
               onChange={(e) => {
                 snippetComments = e.target.value;
-              }}
-            ></input>
+              }}></input>
 
-            <TagInput
-              className="tags"
-              onChange={(e) => (snippetTagList = e)}
-              tags={snippetTagList}
-            />
+            <TagInput className='tags' onChange={(e) => (snippetTagList = e)} tags={snippetTagList} />
             {/* <input className="tagsEdit" onChange={(e) => {setTags}}> <span> Title: </span> {snippetTagList}</input> */}
           </div>
 
           <CodeMirror
             className={styles.editor}
-            height="500px"
-            id="storedCode"
+            height='500px'
+            id='storedCode'
             value={snippetStoredCode}
             extensions={[langs.tsx()]}
             //   placeholder={'const sayHi = () => {\n  console.log(\'Hello World!)\n}'}
-            onChange={(e) => (snippetStoredCode = e)}
-          >
-            <CopyToClipboard
-              text={snippetStoredCode}
-              onCopy={() => setCopied(true)}
-            >
+            onChange={(e) => (snippetStoredCode = e)}>
+            <CopyToClipboard text={snippetStoredCode} onCopy={() => setCopied(true)}>
               <Button className={styles.addButton}> Copy Code Snippet </Button>
             </CopyToClipboard>
           </CodeMirror>
 
           <Button
-            className="saveEditButton"
-            onClick={() => {
-              editSnippet(selectedSnippet.id);
+            className='saveEditButton'
+            onClick={(e) => {
+              editSnippet(e, selectedSnippet._id);
               setEditButtonState(false);
-            }}
-          >
+            }}>
             Save Edit
           </Button>
         </div>
@@ -154,40 +149,36 @@ const SnippetDisplay = ({ selectedSnippet }) => {
     if (editButtonState === false) {
       return (
         <div className={styles.entireSnippetDisplay}>
-          <div className="displayContainer">
-            <p className="title">
+          <div className='displayContainer'>
+            <p className='title'>
               {' '}
-              <span className="title"> Title: </span> {snippetTitle}
+              <span className='title'> Title: </span> {snippetTitle}
             </p>
-            <p className="language">
+            <p className='language'>
               {' '}
               <span> Language: </span> {snippetLanguage}
             </p>
-            <p className="comments">
+            <p className='comments'>
               {' '}
               <span> Comments: </span> {snippetComments}
             </p>
-            <TagInput className="tags" tags={snippetTagList} />
+            <TagInput className='tags' tags={snippetTagList} />
             {/* <div className="tagContainer">{renderTags()}</div> */}
           </div>
 
           <CodeMirror
             className={styles.editor}
-            height="500px"
-            id="storedCode"
+            height='500px'
+            id='storedCode'
             value={snippetStoredCode}
             extensions={[langs.tsx()]}
             //   placeholder={'const sayHi = () => {\n  console.log(\'Hello World!)\n}'}
             options={{
               readOnly: true,
             }}
-            onChange={(e) => (snippetStoredCode = e)}
-          >
-            <CopyToClipboard
-              text={snippetStoredCode}
-              onCopy={() => setCopied(true)}
-            >
-              <Button className="copyButton"> Copy Code Snippet </Button>
+            onChange={(e) => (snippetStoredCode = e)}>
+            <CopyToClipboard text={snippetStoredCode} onCopy={() => setCopied(true)}>
+              <Button className='copyButton'> Copy Code Snippet </Button>
             </CopyToClipboard>
           </CodeMirror>
         </div>
@@ -202,20 +193,18 @@ const SnippetDisplay = ({ selectedSnippet }) => {
 
         <div className={styles.buttonDiv}>
           <Button
-            className="deleteButton"
+            className='deleteButton'
             onClick={() => {
-              deleteSnippet(selectedSnippet.id);
-            }}
-          >
+              deleteSnippet(selectedSnippet._id);
+            }}>
             Delete Snippet
           </Button>
           <Button
-            className="editButton"
+            className='editButton'
             onClick={() => {
               // editSnippet(selectedSnippet.id);
               setEditButtonState(true);
-            }}
-          >
+            }}>
             Edit Snippet
           </Button>
         </div>

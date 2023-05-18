@@ -30,9 +30,9 @@ const Sidebar = () => {
   };
 
   // wrapper to send to our snippets radio list for updating selected snippet. probably not 100% needed, but want to be able to console log from Sidebar
-  const setSelectedSnippetWrapper = (e) => {
-    setSelectedSnippet(e);
-  };
+  // const setSelectedSnippetWrapper = (e) => {
+  //   setSelectedSnippet(e);
+  // };
 
 
   const toggleSidebar = () => {
@@ -87,7 +87,7 @@ const Sidebar = () => {
                 <Spinner animation='border' role='status' variant='primary'></Spinner>
               </div>
             )}
-            <SnippetsRadioList snippets={snippets} setSelectedSnippetWrapper={setSelectedSnippetWrapper} />
+            <SnippetsRadioList snippets={snippets} setSelectedSnippet={setSelectedSnippet} />
           </div>
         </Card.Body>
 

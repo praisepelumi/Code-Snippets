@@ -50,7 +50,7 @@ export default function LoginPage() {
 
         if(data.status === 200){
           getSnippet(username);
-           navigate('/')}
+          navigate('/')}
         else console.log('bad password/username')
       })
 
