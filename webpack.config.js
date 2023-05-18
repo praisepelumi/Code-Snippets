@@ -48,14 +48,13 @@ module.exports = {
     hot: true,
     historyApiFallback: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
-    hot: true,
     static: {
       publicPath: '/dist/',
       directory: path.resolve(__dirname, 'dist'),
     },
     proxy: {
-      '/snippets': 'http://localhost:3000',
-      '/user': 'http://localhost:3000'
+      '/snippets/**': 'http://localhost:3000',
+      '/user/**': 'http://localhost:3000'
     },
   },
   devtool: 'eval-source-map',

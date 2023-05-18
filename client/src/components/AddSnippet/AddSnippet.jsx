@@ -9,8 +9,10 @@ import TagInput from '../../components/ui/TagInput/TagInput';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { LANGUAGES } from '../../data/data.js';
+import {useDispatch, useSelector} from 'react-redux';
+import { setSnippets } from '../../../store/appSlice';
 
-const AddSnippet = ({ closeModal, setSnippets }) => {
+const AddSnippet = ({ closeModal }) => {
   const [title, setTitle] = useState('');
   const [language, setLanguage] = useState('');
   const [comments, setComments] = useState('');
@@ -18,6 +20,8 @@ const AddSnippet = ({ closeModal, setSnippets }) => {
   const [tagList, setTags] = useState('');
   const [error, setError] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const dispatch = useDispatch()
+  const username = useSelector(state => state.appSlice.username);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -35,6 +39,7 @@ const AddSnippet = ({ closeModal, setSnippets }) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        username: username,
         title: title,
         language: language,
         comments: comments,
@@ -42,21 +47,18 @@ const AddSnippet = ({ closeModal, setSnippets }) => {
         storedCode: storedCode,
       }),
     })
-      .then((data) => data.json())
+      .then(() =>  {dispatch(setSnippets({ title, language, comments, tagList, storedCode }))})
       .catch((err) => {
         console.log(err);
         console.log('failed saving snippet');
       });
 
-    setSnippets((prevState) => [
-      ...prevState,
-      { title, language, comments, tags, storedCode },
-    ]);
+   
     // setTitle('');
     // setLanguage('');
     // setComments('');
     // setStoredCode('');
-  }
+  
 
   // wrapper function for setTags to send to TagInput
   function setTagsWrapper(tags) {
@@ -146,6 +148,6 @@ const AddSnippet = ({ closeModal, setSnippets }) => {
       </div>
     </div>
   );
-};
+}};
 
 export default AddSnippet;
