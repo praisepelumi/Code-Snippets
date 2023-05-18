@@ -23,6 +23,7 @@ const AddSnippet = ({ closeModal }) => {
   const dispatch = useDispatch()
   const username = useSelector(state => state.appSlice.username);
 
+
   function handleSubmit(e) {
     e.preventDefault();
     if (title === '') {
@@ -53,7 +54,6 @@ const AddSnippet = ({ closeModal }) => {
         console.log('failed saving snippet');
       });
 
-   
     // setTitle('');
     // setLanguage('');
     // setComments('');

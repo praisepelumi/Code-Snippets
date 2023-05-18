@@ -36,7 +36,6 @@ const SnippetDisplay = ({ selectedSnippet }) => {
       .then((response) => {
         if (response.ok) {
           // getSnippet();
-          // delete from state
         }
       })
       .catch((err) => {
@@ -70,7 +69,6 @@ const SnippetDisplay = ({ selectedSnippet }) => {
       .then((response) => {
         response.json();
         // getSnippet();
-        // update the state
       })
       .catch((err) => {
         return {

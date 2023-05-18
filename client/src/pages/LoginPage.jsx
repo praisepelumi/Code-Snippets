@@ -27,6 +27,7 @@ export default function LoginPage() {
           console.log(snippet)
         }
 
+
         dispatch(setSnippets(newSnippetArray));
         dispatch(setLoading(false));
       })
@@ -36,7 +37,6 @@ export default function LoginPage() {
 
   function loginFunction(e, password) {
     e.preventDefault();
-
     fetch('/user/login', {
       method: 'POST',
       headers: {
@@ -48,11 +48,13 @@ export default function LoginPage() {
       }),
     })
       .then((data) => {
+
         if(data.status === 200){
           getSnippet(username);
            navigate('/')}
         else console.log('bad password/username')
       })
+
       .catch((err) => {
         console.log(err);
         console.log('Failed to log user in');
@@ -73,15 +75,9 @@ export default function LoginPage() {
           required></input>
 
         <label htmlFor='password'>Password:</label>
-        <input
-          id='password'
-          type='password'
-          placeholder='your password'
-          required></input>
+        <input id='password' type='password' placeholder='your password' required></input>
 
-        <button type='submit'>
-          Login
-        </button>
+        <button type='submit'>Login</button>
       </form>
     </>
   );
