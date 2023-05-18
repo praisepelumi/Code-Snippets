@@ -44,7 +44,7 @@ module.exports = {
   },
   devServer: {
     host: 'localhost',
-    port: 8081,
+    port: 8080,
     hot: true,
     historyApiFallback: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
@@ -54,8 +54,8 @@ module.exports = {
       directory: path.resolve(__dirname, 'dist'),
     },
     proxy: {
-      '/snippets': 'http://localhost:3001',
-      '/user': 'http://localhost:3001'
+      '/snippets': 'http://localhost:3000',
+      '/user': 'http://localhost:3000'
     },
   },
   devtool: 'eval-source-map',

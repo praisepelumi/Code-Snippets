@@ -4,7 +4,7 @@ const puppeteer = require('puppeteer');
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
 
-  await page.goto('http://localhost:8081/login');
+  await page.goto('http://localhost:8080/login');
 
   await page.type('#username', 'kfan1');
   await page.type('#password', '123456');
