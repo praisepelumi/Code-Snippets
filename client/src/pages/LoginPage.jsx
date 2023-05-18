@@ -8,11 +8,30 @@ export default function LoginPage() {
   const dispatch = useDispatch();
   const username = useSelector((state) => state.appSlice.username);
 
+  // getSnippet func
+  const getSnippet = (username) => {
+    dispatch(setLoading(true));
+
+    fetch(`/snippets/${username}`)
+      .then((res) => res.json())
+      .then((res) => {
+        // console.log('res', res);
+
+        // moved setSnippets to outside of for loop so we arent re-rendering each time a snippet is added to state
+        const newSnippetArray = [];
+        for (const snippet of res) newSnippetArray.push(snippet);
+
+        dispatch(setSnippets(newSnippetArray));
+        dispatch(setLoading(false));
+      })
+      .catch((error) => console.log('Get request failed', error));
+  };
+
   function loginFunction(e, password) {
     e.preventDefault();
 
     //TODO: change endpoint here based on what they use on the backend
-    fetch('/tbd', {
+    fetch('/user/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -22,7 +41,12 @@ export default function LoginPage() {
         password: password,
       }),
     })
-      .then((data) => data.json())
+      .then((data) => {
+        if (data.status === 200) {
+          getSnippet(username);
+          navigate('/');
+        } else console.log('wrong username/password');
+      })
       // then if data.statusCode === 200 we navigate
       // else we create an error message
       .catch((err) => {
@@ -46,15 +70,9 @@ export default function LoginPage() {
           required></input>
 
         <label htmlFor='password'>Password:</label>
-        <input
-          id='password'
-          type='password'
-          placeholder='your password'
-          required></input>
+        <input id='password' type='password' placeholder='your password' required></input>
 
-        <button type='submit'>
-          Login
-        </button>
+        <button type='submit'>Login</button>
       </form>
     </>
   );

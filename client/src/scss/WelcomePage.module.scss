@@ -18,42 +18,42 @@
   background-size: 2400px;
 }
 
-@for $i from 0 through 3517 {
-  #grid:nth-child(#{$i}) {
-    position: absolute;
-    top: math.floor(math.div($i, 79) * 24px);
-    left: $i * 24px - (math.floor(math.div($i, 79)) * 1896) - 24px;
-    z-index: 1;
-    color: rgba(255, 0, 0, 0);
-    transition: 2s;
-    font-size: 48px;
-  }
+// @for $i from 0 through 3517 {
+//   #grid:nth-child(#{$i}) {
+//     position: absolute;
+//     top: math.floor(math.div($i, 79) * 24px);
+//     left: $i * 24px - (math.floor(math.div($i, 79)) * 1896) - 24px;
+//     z-index: 1;
+//     color: rgba(255, 0, 0, 0);
+//     transition: 2s;
+//     font-size: 48px;
+//   }
 
-  #grid:nth-child(#{math.floor(math.div($i,4))*4}):hover {
-    transition: none;
-    color: rgb(255, 153, 0);
-    font-size: 24px;
-    z-index: 1;
-  }
-  #grid:nth-child(#{math.floor(math.div($i,4))*4 + 1}):hover {
-    transition: none;
-    color: rgb(255, 251, 0);
-    font-size: 28px;
-    z-index: 1;
-  }
-  #grid:nth-child(#{math.floor(math.div($i,4))*4 + 2}):hover {
-    transition: none;
-    color: rgb(255, 102, 0);
-    font-size: 20px;
-    z-index: 1;
-  }
-  #grid:nth-child(#{math.floor(math.div($i,4))*4 + 3}):hover {
-    transition: none;
-    color: rgb(255, 60, 0);
-    font-size: 26px;
-    z-index: 1;
-  }
-}
+//   #grid:nth-child(#{math.floor(math.div($i,4))*4}):hover {
+//     transition: none;
+//     color: rgb(255, 153, 0);
+//     font-size: 24px;
+//     z-index: 1;
+//   }
+//   #grid:nth-child(#{math.floor(math.div($i,4))*4 + 1}):hover {
+//     transition: none;
+//     color: rgb(255, 251, 0);
+//     font-size: 28px;
+//     z-index: 1;
+//   }
+//   #grid:nth-child(#{math.floor(math.div($i,4))*4 + 2}):hover {
+//     transition: none;
+//     color: rgb(255, 102, 0);
+//     font-size: 20px;
+//     z-index: 1;
+//   }
+//   #grid:nth-child(#{math.floor(math.div($i,4))*4 + 3}):hover {
+//     transition: none;
+//     color: rgb(255, 60, 0);
+//     font-size: 26px;
+//     z-index: 1;
+//   }
+// }
 
 #welcomePageMain {
   font-family: raleway, sans-serif;

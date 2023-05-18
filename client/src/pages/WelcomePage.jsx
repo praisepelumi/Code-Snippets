@@ -27,9 +27,9 @@ export default function WelcomePage() {
   document.body.style.cursor = 'none';
 
   const griddy = [];
-  for (let i = 0; i < 3517; i++) {
-    griddy.push(<i className='fa-solid fa-star' id={styles.grid}></i>);
-  }
+  // for (let i = 0; i < 3517; i++) {
+  //   griddy.push(<i className='fa-solid fa-star' id={styles.grid}></i>);
+  // }
 
   return (
     <div

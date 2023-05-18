@@ -9,8 +9,10 @@ import TagInput from '../../components/ui/TagInput/TagInput';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { LANGUAGES } from '../../data/data.js';
+import { useDispatch } from 'react-redux';
+import { setSnippets } from '../../../store/appSlice';
 
-const AddSnippet = ({ closeModal, setSnippets }) => {
+const AddSnippet = ({ closeModal }) => {
   const [title, setTitle] = useState('');
   const [language, setLanguage] = useState('');
   const [comments, setComments] = useState('');
@@ -18,6 +20,7 @@ const AddSnippet = ({ closeModal, setSnippets }) => {
   const [tagList, setTags] = useState('');
   const [error, setError] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const dispatch = useDispatch()
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -48,10 +51,7 @@ const AddSnippet = ({ closeModal, setSnippets }) => {
         console.log('failed saving snippet');
       });
 
-    setSnippets((prevState) => [
-      ...prevState,
-      { title, language, comments, tags, storedCode },
-    ]);
+    dispatch(setSnippets({ title, language, comments, tags, storedCode }));
     // setTitle('');
     // setLanguage('');
     // setComments('');
