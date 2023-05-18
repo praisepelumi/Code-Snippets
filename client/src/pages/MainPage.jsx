@@ -5,6 +5,6 @@ import WelcomePage from './WelcomePage';
 
 export default function MainPage() {
   const username = useSelector(state => state.appSlice.username)
-  return <MainContainer />;
-  // return username ? <MainContainer /> : <WelcomePage />;
+  // return <MainContainer />;
+  return username ? <MainContainer /> : <WelcomePage />;
 }
