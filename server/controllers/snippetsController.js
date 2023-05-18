@@ -4,13 +4,13 @@ const snippetsController = {};
 
 snippetsController.getSnippets = (req, res, next) => {
   const { username } = req.params;
-  console.log('req.params is:', req.params);
+  // console.log('req.params is:', req.params);
 
   Snippet.find({ username })
 
     .then((user) => {
       res.locals.allSnippets = user;
-      console.log('res.locals.allSnippets is:', res.locals.allSnippets);
+      // console.log('res.locals.allSnippets is:', res.locals.allSnippets);
       return next();
     })
     .catch((err) => {
@@ -35,7 +35,7 @@ snippetsController.createSnippet = async (req, res, next) => {
 
 snippetsController.updateSnippet = async (req, res, next) => {
   // const { _id, title, comments, storedCode, tags, language } = req.body;
-  console.log('req.body: ', req.body);
+  //console.log('req.body: ', req.body);
 
   if (!req.body.title) return next('error');
   res.locals.updatedSnippet = await Snippet.findOneAndUpdate(

@@ -30,7 +30,7 @@ const SnippetDisplay = ({ selectedSnippet }) => {
   const dispatch = useDispatch();
 
   const deleteSnippet = (id) => {
-    console.log(id);
+    // console.log(id);
     fetch('/snippets', {
       method: 'DELETE',
       headers: {
