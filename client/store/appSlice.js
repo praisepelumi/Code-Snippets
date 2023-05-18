@@ -5,7 +5,7 @@ export const appSlice = createSlice({
   initialState: {
     username: '',
     loading: true,
-    snippets: [],
+    snippets: []
   },
   reducers: {
     setUsername: (state, action) => {
@@ -14,9 +14,10 @@ export const appSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
-    setSnippets: (state, action) => {
+
+    setSnippets: (state, action)=>{
       state.snippets = [...state.snippets, action.payload];
-    },
+    }
   },
 });
 

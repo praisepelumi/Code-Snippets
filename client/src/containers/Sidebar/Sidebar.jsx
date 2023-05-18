@@ -6,16 +6,18 @@ import SnippetsRadioList from './SnippetsRadioList/SnippetsRadioList.jsx';
 import { Card, Spinner } from 'react-bootstrap';
 import arrow from '../../assets/arrow.png';
 import img from '../../assets/star nose mole.jpeg';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import { setLoading, setSnippets } from '../../../store/appSlice.js';
 
 const Sidebar = () => {
   const [selectedSnippet, setSelectedSnippet] = useState({});
   const [openModal, setOpenModal] = useState(false);
   const [collapse, setCollapse] = useState(false);
-  const loading = useSelector((state) => state.appSlice.loading);
-  const snippets = useSelector((state) => state.appSlice.snippets);
+  const dispatch = useDispatch();
+  const loading = useSelector(state => state.appSlice.loading);
+  const snippets = useSelector(state => state.appSlice.snippets);
 
-
+ 
   // renderTags function
   const renderTabs = () => {
     const tabs = [];
@@ -32,8 +34,6 @@ const Sidebar = () => {
     setSelectedSnippet(e);
   };
 
-  // // get data from backend at first page load
-  // useEffect(() => getSnippet(), []);
 
   const toggleSidebar = () => {
     setCollapse(() => !collapse);
@@ -70,6 +70,7 @@ const Sidebar = () => {
   //   )
 
   return (
+
     <>
       <Card className={`pt-0 ${styles.sidebar} ${!collapse && styles.open}`}>
         <Card.Header>

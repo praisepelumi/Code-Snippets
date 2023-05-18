@@ -2,24 +2,31 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUsername } from '../../store/appSlice';
+import { setLoading, setSnippets } from '../../store/appSlice';
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const username = useSelector((state) => state.appSlice.username);
 
-  // getSnippet func
-  const getSnippet = (username) => {
+   // getSnippet func
+   const getSnippet = (username) => {
     dispatch(setLoading(true));
 
+    console.log(newSnippetArray)
     fetch(`/snippets/${username}`)
       .then((res) => res.json())
       .then((res) => {
-        // console.log('res', res);
+        console.log('res', res);
 
         // moved setSnippets to outside of for loop so we arent re-rendering each time a snippet is added to state
         const newSnippetArray = [];
-        for (const snippet of res) newSnippetArray.push(snippet);
+        
+        for (const snippet of res) {
+          newSnippetArray.push(snippet);
+          console.log(snippet)
+        }
+
 
         dispatch(setSnippets(newSnippetArray));
         dispatch(setLoading(false));
@@ -27,10 +34,9 @@ export default function LoginPage() {
       .catch((error) => console.log('Get request failed', error));
   };
 
+
   function loginFunction(e, password) {
     e.preventDefault();
-
-    //TODO: change endpoint here based on what they use on the backend
     fetch('/user/login', {
       method: 'POST',
       headers: {
@@ -42,19 +48,18 @@ export default function LoginPage() {
       }),
     })
       .then((data) => {
-        if (data.status === 200) {
+
+        if(data.status === 200){
           getSnippet(username);
-          navigate('/');
-        } else console.log('wrong username/password');
+           navigate('/')}
+        else console.log('bad password/username')
       })
-      // then if data.statusCode === 200 we navigate
-      // else we create an error message
+
       .catch((err) => {
         console.log(err);
         console.log('Failed to log user in');
       });
 
-    navigate('/');
   }
 
   return (

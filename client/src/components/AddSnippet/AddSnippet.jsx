@@ -9,7 +9,7 @@ import TagInput from '../../components/ui/TagInput/TagInput';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { LANGUAGES } from '../../data/data.js';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { setSnippets } from '../../../store/appSlice';
 
 const AddSnippet = ({ closeModal }) => {
@@ -21,6 +21,8 @@ const AddSnippet = ({ closeModal }) => {
   const [error, setError] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch()
+  const username = useSelector(state => state.appSlice.username);
+
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -38,6 +40,7 @@ const AddSnippet = ({ closeModal }) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        username: username,
         title: title,
         language: language,
         comments: comments,
@@ -45,18 +48,17 @@ const AddSnippet = ({ closeModal }) => {
         storedCode: storedCode,
       }),
     })
-      .then((data) => data.json())
+      .then(() =>  {dispatch(setSnippets({ title, language, comments, tagList, storedCode }))})
       .catch((err) => {
         console.log(err);
         console.log('failed saving snippet');
       });
 
-    dispatch(setSnippets({ title, language, comments, tags, storedCode }));
     // setTitle('');
     // setLanguage('');
     // setComments('');
     // setStoredCode('');
-  }
+  
 
   // wrapper function for setTags to send to TagInput
   function setTagsWrapper(tags) {
@@ -146,6 +148,6 @@ const AddSnippet = ({ closeModal }) => {
       </div>
     </div>
   );
-};
+}};
 
 export default AddSnippet;
