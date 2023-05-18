@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../scss/WelcomePage.module.scss';
+import { useSelector } from 'react-redux';
 
 export default function WelcomePage() {
   const [MousePosition, setMousePosition] = useState({ left: 0, top: 0 });
   const [starMousePosition, setStarMousePosition] = useState({ left: 0, top: 0 });
   const navigate = useNavigate();
+  const themeColor = useSelector((state) => state.appSlice.themeColor);
 
   function handleMouseMove(e) {
     setMousePosition({ left: -e.pageX / 8, top: -e.pageY / 8 });
@@ -29,9 +31,13 @@ export default function WelcomePage() {
   //   griddy.push(<i className='fa-solid fa-star' id={styles.grid}></i>);
   // }
 
+  useEffect(() => {
+    document.querySelector(`#${styles.welcomeDiv}`).setAttribute('theme', themeColor);
+  });
+
   return (
     <div
-      className={styles.welcomeDiv}
+      id={styles.welcomeDiv}
       onMouseMove={(e) => {
         handleMouseMove(e);
         handleStarMove(e);

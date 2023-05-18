@@ -5,19 +5,17 @@ import styles from './Sidebar.module.scss';
 import SnippetsRadioList from './SnippetsRadioList/SnippetsRadioList.jsx';
 import { Card, Spinner } from 'react-bootstrap';
 import arrow from '../../assets/arrow.png';
-import img from '../../assets/star nose mole.jpeg';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setLoading, setSnippets } from '../../../store/appSlice.js';
 
 const Sidebar = () => {
   const [selectedSnippet, setSelectedSnippet] = useState({});
-  const [openModal, setOpenModal] = useState(false);
   const [collapse, setCollapse] = useState(false);
-  const dispatch = useDispatch();
-  const loading = useSelector(state => state.appSlice.loading);
-  const snippets = useSelector(state => state.appSlice.snippets);
 
- 
+  const openModal = useSelector((state) => state.appSlice.openModal);
+  const loading = useSelector((state) => state.appSlice.loading);
+  const snippets = useSelector((state) => state.appSlice.snippets);
+
   // renderTags function
   const renderTabs = () => {
     const tabs = [];
@@ -33,7 +31,6 @@ const Sidebar = () => {
   // const setSelectedSnippetWrapper = (e) => {
   //   setSelectedSnippet(e);
   // };
-
 
   const toggleSidebar = () => {
     setCollapse(() => !collapse);
@@ -70,7 +67,6 @@ const Sidebar = () => {
   //   )
 
   return (
-
     <>
       <Card className={`pt-0 ${styles.sidebar} ${!collapse && styles.open}`}>
         <Card.Header>
@@ -90,19 +86,8 @@ const Sidebar = () => {
             <SnippetsRadioList snippets={snippets} setSelectedSnippet={setSelectedSnippet} />
           </div>
         </Card.Body>
-
-        <h2 className={styles.imgHeader} style={{ display: 'inline-block' }}>
-          Click me to add a new snippet!
-        </h2>
-        <button
-          className={styles.addButton}
-          onClick={() => {
-            setOpenModal(true);
-          }}>
-          <img src={img} alt='img' className={styles.img} />
-        </button>
       </Card>
-      {openModal && <AddSnippet closeModal={setOpenModal} />}
+      {openModal && <AddSnippet />}
       <div className={`${styles.snippetDisplay} ${!collapse && styles.snippetDisplayOpen}`}>
         {snippets && <SnippetDisplay selectedSnippet={selectedSnippet} />}
       </div>

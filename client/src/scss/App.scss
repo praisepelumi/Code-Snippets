@@ -1,2 +1,28 @@
 @import "_global.scss";
 @import "~bootstrap/scss/bootstrap";
+
+$primary: rgb(34, 34, 34);
+$secondary: rgb(70, 70, 70);
+$superLightGrey: rgb(241, 241, 241);
+
+body {
+  background-color: $superLightGrey;
+  transition: 2s;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: $secondary;
+    color: $superLightGrey;
+  }
+}
+
+body[theme='false'] {
+  background-color: $secondary;
+  color: $superLightGrey;
+}
+
+body[theme='true'] {
+  background-color: $superLightGrey;
+  color: $primary;
+}

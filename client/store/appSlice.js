@@ -6,8 +6,13 @@ export const appSlice = createSlice({
     username: '',
     loading: true,
     snippets: [],
+    openModal: false,
+    themeColor: true,
   },
   reducers: {
+    setThemeColor: (state, action) => {
+      state.themeColor = !state.themeColor;
+    },
     setUsername: (state, action) => {
       state.username = action.payload;
     },
@@ -28,10 +33,13 @@ export const appSlice = createSlice({
           return;
         }
       }
-    }
+    },
+    setOpenModal: (state, action) => {
+      state.openModal = action.payload;
+    },
   },
 });
 
-export const { setUsername, setLoading, setSnippets, updateSnippet } = appSlice.actions;
+export const { setUsername, setLoading, setSnippets, updateSnippet, setOpenModal, setThemeColor } = appSlice.actions;
 
 export default appSlice.reducer;
