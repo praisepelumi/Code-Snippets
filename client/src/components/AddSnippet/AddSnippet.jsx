@@ -10,18 +10,19 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { LANGUAGES } from '../../data/data.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSnippets } from '../../../store/appSlice';
+import { setOpenModal, setSnippets } from '../../../store/appSlice';
 
-const AddSnippet = ({ closeModal }) => {
+const AddSnippet = () => {
   const [title, setTitle] = useState('');
   const [language, setLanguage] = useState('');
   const [comments, setComments] = useState('');
   const [storedCode, setStoredCode] = useState('');
   const [tagList, setTags] = useState('');
   const [error, setError] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
+
   const dispatch = useDispatch();
   const username = useSelector((state) => state.appSlice.username);
+  const openModal = useSelector((state) => state.appSlice.openModal);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -29,7 +30,7 @@ const AddSnippet = ({ closeModal }) => {
       setError(true);
       return;
     } else {
-      setOpenModal(true);
+      dispatch(setOpenModal(true));
       setError(false);
     }
 
@@ -74,7 +75,7 @@ const AddSnippet = ({ closeModal }) => {
         <Modal
           className={styles.modal}
           show={true}
-          onHide={() => closeModal(false)}
+          onHide={() => dispatch(setOpenModal(false))}
           size='xl'
           aria-labelledby='contained-modal-title-vcenter'
           centered>
@@ -139,8 +140,8 @@ const AddSnippet = ({ closeModal }) => {
           </div>
 
           <Modal.Footer>
-            {openModal && <SaveModal closeModal={setOpenModal} />}
-            <Button variant='secondary' onClick={() => closeModal(false)}>
+            {openModal && <SaveModal />}
+            <Button variant='secondary' onClick={() => dispatch(setOpenModal(false))}>
               Close
             </Button>
             <Button variant='primary' className='saveButton' onClick={handleSubmit}>

@@ -1,12 +1,27 @@
 @use 'sass:math';
 @import url('https://use.typekit.net/spt4xch.css');
 
-.welcomeDiv {
-  background-image: linear-gradient(black, rgb(0, 110, 255));
+#welcomeDiv {
+  background-image: linear-gradient(rgb(0, 140, 255), rgb(255, 255, 255));
   height: 1080px;
   width: 100%px;
   overflow: hidden;
+  transition: background-image 5s ease-in-out;
   // cursor: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  #welcomeDiv {
+    background-image: linear-gradient(black, rgb(0, 110, 255));
+  }
+}
+
+#welcomeDiv[theme='false'] {
+  background-image: linear-gradient(black, rgb(0, 110, 255));
+}
+
+#welcomeDiv[theme='true'] {
+  background-image: linear-gradient(rgb(0, 140, 255), rgb(255, 255, 255));
 }
 
 .backgroundImg {
